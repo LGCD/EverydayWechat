@@ -25,3 +25,6 @@ def get_lovelive_info():
 
 
 get_one_words = get_lovelive_info
+
+if __name__ == '__main__':
+    print(get_one_words())

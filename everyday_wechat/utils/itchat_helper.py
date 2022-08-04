@@ -152,6 +152,8 @@ def init_wechat_config():
     # print(json.dumps(alarm_dict, ensure_ascii=False))
     # print('初始化微信所需数据结束..')
 
+    print(get_friend("L。"))
+
     log_all_config()
 
 

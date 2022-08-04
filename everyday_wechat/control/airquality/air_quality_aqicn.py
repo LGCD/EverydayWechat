@@ -4,7 +4,7 @@ Project: EverydayWechat-Github
 Creator: DoubleThunder
 Create time: 2019-09-30 17:58
 Introduction: 获取空气质量
-官网：http://aqicn.org/here/
+官网：https://aqicn.org/here/
 
 """
 
@@ -63,6 +63,6 @@ def get_air_quality(city):
 
 
 if __name__ == '__main__':
-    city = '长沙'
+    city = '北京'
     dd = get_air_quality(city)
     print(dd)

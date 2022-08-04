@@ -120,10 +120,11 @@ def init_data():
 
     init_wechat_config()  # 初始化所有配置内容
 
-    # 提醒内容不为空时，启动定时任务
-    alarm_dict = config.get('alarm_info').get('alarm_dict')
-    if alarm_dict:
-        init_alarm(alarm_dict)  # 初始化定时任务
+    # # 提醒内容不为空时，启动定时任务
+    # alarm_dict = config.get('alarm_info').get('alarm_dict')
+    # if alarm_dict:
+    #     init_alarm(alarm_dict)  # 初始化定时任务
+    send_alarm_msg("girlfriend_infos")
 
     print('初始化完成，开始正常工作。')
 
@@ -137,7 +138,7 @@ def init_alarm(alarm_dict):
     scheduler = BackgroundScheduler()
     for key, value in alarm_dict.items():
         scheduler.add_job(send_alarm_msg, 'cron', [key], hour=value['hour'],
-                          minute=value['minute'], id=key, misfire_grace_time=600, jitter=value.get("alarm_jitter",0))
+                          minute=value['minute'], id=key, misfire_grace_time=600, jitter=value.get("alarm_jitter", 0))
     scheduler.start()
 
     # print('已开启定时发送提醒功能...')
@@ -147,28 +148,27 @@ def init_alarm(alarm_dict):
 def send_alarm_msg(key):
     """ 发送定时提醒 """
     print('\n启动定时自动提醒...')
-    conf = config.get('alarm_info').get('alarm_dict')
+    conf = config.get('alarm_info')
 
-    gf = conf.get(key)
+    gf = conf.get(key)[0]
     # print(gf)air_quality_city
     is_tomorrow = gf.get('is_tomorrow', False)
-    calendar_info = get_calendar_info(gf.get('calendar'), is_tomorrow)
-    weather = get_weather_info(gf.get('city_name'), is_tomorrow)
-    horoscope = get_constellation_info(gf.get("horescope"), is_tomorrow)
-    dictum = get_dictum_info(gf.get('dictum_channel'))
-    diff_time = get_diff_time(gf.get('start_date'), gf.get('start_date_msg'))
-    air_quality = get_air_quality(gf.get('air_quality_city'))
+    calendar_info = get_calendar_info(gf.get('calendar'), is_tomorrow) + "\n"
+    weather = get_weather_info(gf.get('city_name'), is_tomorrow) + "\n"
+    horoscope = get_constellation_info(gf.get("horescope"), is_tomorrow) + "\n"
+    dictum = get_dictum_info(gf.get('dictum_channel')) + "\n"
+    diff_time = get_diff_time(gf.get('start_date'), gf.get('start_date_msg')) + "\n"
+    air_quality = get_air_quality(gf.get('air_quality_city')) + "\n"
 
     sweet_words = gf.get('sweet_words')
     send_msg = '\n'.join(
         x for x in [calendar_info, weather, air_quality, horoscope, dictum, diff_time, sweet_words] if x)
-    # print('\n' + send_msg + '\n')
     if not send_msg or not is_online(): return
-    uuid_list = gf.get('uuid_list')
+    uuid_list = list(conf.get("alarm_dict").values())[0]["uuid_list"]
     for uuid in uuid_list:
         time.sleep(1)
         itchat.send(send_msg, toUserName=uuid)
-    print('\n定时内容:\n{}\n发送成功...\n\n'.format(send_msg))
+    print('\n消息内容:\n{}\n发送成功...\n\n'.format(send_msg))
     print('自动提醒消息发送完成...\n')
 
 
@@ -194,7 +194,7 @@ def exit_msg():
 
 
 if __name__ == '__main__':
-    # run()
+    run()
     pass
     # config.init()
     # init_wechat()

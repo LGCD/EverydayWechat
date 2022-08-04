@@ -50,7 +50,7 @@ def get_zsh_info():
 get_one_words = get_zsh_info
 
 if __name__ == '__main__':
-    # for _ in range(15):
-    #     ow = get_one_words()
-    #     print(ow)
+    for _ in range(15):
+        ow = get_one_words()
+        print(ow)
     pass

@@ -168,8 +168,8 @@ def get_express_info(express_code, shipper_code='', shipper_name=''):
 
 
 if __name__ == '__main__':
-    code = '78109182715352'
-    code = '78109356970791'
+    # code = '78109182715352'
+    # code = '78109356970791'
     # code = '9860572561560'
     # code = 'JD0001855864185'
     cc = get_express_info(code)

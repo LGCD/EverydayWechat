@@ -56,5 +56,5 @@ get_today_weather = get_rttodayweather
 if __name__ == '__main__':
     cityname = '香港'
     weather = get_today_weather(cityname)
-    # print(weather)
+    print(weather)
     pass

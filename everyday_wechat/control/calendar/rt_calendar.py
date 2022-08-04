@@ -11,7 +11,7 @@ https://github.com/MZCretin/RollToolsApi#指定日期的节假日及万年历信
 "dayOfYear":178,"weekOfYear":26,"constellation":"巨蟹座"}}
 """
 
-from datetime import datetime
+from datetime import datetime, timedelta
 import requests
 
 __all__ = ['STFT', 'WEEK_DICT', 'get_rtcalendar']
@@ -38,7 +38,8 @@ def get_rtcalendar(date=''):
 
     print('获取 {} 的日历...'.format(date_))
     try:
-        resp = requests.get('https://www.mxnzp.com/api/holiday/single/{}'.format(date_))
+        resp = requests.get('https://www.mxnzp.com/api/holiday/single/{}'.format(
+            date_) + "?ignoreHoliday=false&app_id=abrinfehgentspqn&app_secret=L3lrck84K3Irelk5MExRdm1RMU5idz09")
         if resp.status_code == 200:
             # print(resp.text)
             content_dict = resp.json()
@@ -74,8 +75,7 @@ def get_rtcalendar(date=''):
 get_calendar = get_rtcalendar
 
 if __name__ == '__main__':
-    # date = (datetime.now() + timedelta(days=1)).strftime('%Y%m%d')
-    date = '201889'
+    date = datetime.now().strftime('%Y%m%d')
     content = get_calendar(date)
     print(content)
     pass

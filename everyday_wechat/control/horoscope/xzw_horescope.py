@@ -71,5 +71,5 @@ get_today_horoscope = get_xzw_horoscope
 if __name__ == '__main__':
     # print (get_constellation(3, 10))
     # print(get_xzw_text("03-18"))
-    is_tomorrow = True
-    print(get_xzw_horoscope("水瓶座", is_tomorrow))
+    # is_tomorrow = True
+    print(get_xzw_horoscope("双鱼座"))
